@@ -59,7 +59,7 @@ private fun TopAppBar() {
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                ImageVector.vectorResource(id = R.drawable.title_topbar),
+                ImageVector.vectorResource(id = R.drawable.title_topbar_4),
                 contentDescription = ""
             )
         }
