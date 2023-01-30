@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.kodex.gitkuchgury.model.Note
 
 interface DatabaseRepository {
+
     val readAll: LiveData<List<Note>>
 
     suspend fun create(note: Note, onSuccess: ()->Unit)

@@ -9,6 +9,7 @@ import com.kodex.gitkuchgury.model.Note
 
 @Database(entities = [Note::class], version = 1)
 abstract class AppRoomDatabase: RoomDatabase() {
+
     abstract fun getRoomDao(): NoteRoomDao
 
     companion object{
