@@ -32,7 +32,9 @@ import com.kodex.gitkuchgury.utils.Constants.Keys.NOTE_TITLE
 fun NoteScreen(navController: NavController, viewModel: MainViewModel, noteId: String?) {
 
     val notes = viewModel.reedAllNotes().observeAsState().value
-    val note = notes.firstOrNull{it.id == noteId?.toInt()}?: Note(title = NONE, subtitle = NONE)
+    val note = notes?.firstOrNull { it.id == noteId?.toInt() } ?: Note(
+        title = NONE,
+        subtitle = NONE)
 
     Scaffold(
         modifier = Modifier.fillMaxWidth()
@@ -48,13 +50,13 @@ fun NoteScreen(navController: NavController, viewModel: MainViewModel, noteId: S
             Column(modifier = Modifier.padding(vertical = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = NOTE_TITLE,
+                    text = note.title,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 32.dp)
                 )
                 Text(
-                    text = NOTE_SUBTITLE,
+                    text = note.subtitle,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Light,
                     modifier = Modifier.padding(top = 22.dp)
