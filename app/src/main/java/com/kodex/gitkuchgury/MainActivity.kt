@@ -30,6 +30,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GitKuchguryTheme {
+
                Scaffold (
                    topBar = { TopAppBar() },
                    content = {
