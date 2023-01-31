@@ -4,12 +4,11 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.kodex.gitkuchgury.database.firebase.AppFirebaseRepository
 import com.kodex.gitkuchgury.database.room.AppRoomDatabase
 import com.kodex.gitkuchgury.database.room.repository.RoomRepository
 import com.kodex.gitkuchgury.model.Note
-import com.kodex.gitkuchgury.utils.REPOSITORY
-import com.kodex.gitkuchgury.utils.TYPE_FIREBASE
-import com.kodex.gitkuchgury.utils.TYPE_ROOM
+import com.kodex.gitkuchgury.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -40,6 +39,13 @@ class MainViewModel (application: Application):AndroidViewModel(application){
                 val dao = AppRoomDatabase.getInstance(context = context).getRoomDao()
                 REPOSITORY = RoomRepository(dao)
                 onSuccess()
+            }
+            TYPE_FIREBASE -> {
+                REPOSITORY = AppFirebaseRepository()
+                REPOSITORY.connectionToFirebase(
+                    {onSuccess() },
+                    {Log.d("check", "Error: ${it}")}
+                )
             }
         }
     }
