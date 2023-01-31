@@ -2,24 +2,28 @@ package com.kodex.gitkuchgury.utils
 
 import com.kodex.gitkuchgury.database.DatabaseRepository
 
-const val TYPE_DATABASE = "type_database"
+    const val TYPE_DATABASE = "type_database"
     const val TYPE_ROOM = "type_room"
     const val TYPE_FIREBASE = "type_firebase"
+    const val FIREBASE_ID = "firebase_id"
 
     lateinit var REPOSITORY: DatabaseRepository
     lateinit var LOGIN: String
-    lateinit  var PASSWORD: String
+    lateinit var PASSWORD: String
+    lateinit var DB_TYPE: String
 
     object Constants{
         object Keys{
+
+            const val REFERENCE ="https://gitkuchugury-default-rtdb.europe-west1.firebasedatabase.app/"
             const val NOTES_DATABASE ="notes_database"
             const val NOTES_TABLE ="notes_table"
             const val NOTE_TITLE ="Заметка"
             const val NOTE_SUBTITLE ="Подробнее"
             const val ADD_NOTE ="Добавить дело"
             const val SAFE_NOTE ="Сохранить дело"
-            const val TITLE ="Title"
-            const val SUBTITLE ="Subtitle"
+            const val TITLE ="title"
+            const val SUBTITLE ="subtitle"
             const val WAT_WELL_WE_YSE ="Что использовать?"
             const val ROOM_DATABASE ="Room_database"
             const val FIREBASE_DATABASE ="Firebase_database"

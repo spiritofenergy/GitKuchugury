@@ -1,6 +1,7 @@
 package com.kodex.gitkuchgury.screens
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,6 +29,8 @@ import com.kodex.gitkuchgury.ui.theme.GitKuchguryTheme
 import com.kodex.gitkuchgury.utils.Constants.Keys.ADD_NOTE
 import com.kodex.gitkuchgury.utils.Constants.Keys.NOTE_SUBTITLE
 import com.kodex.gitkuchgury.utils.Constants.Keys.NOTE_TITLE
+import com.kodex.gitkuchgury.utils.Constants.Keys.SUBTITLE
+import com.kodex.gitkuchgury.utils.Constants.Keys.TITLE
 
 @Composable
 fun AddScreen(navController: NavController, viewModel: MainViewModel) {
@@ -65,10 +68,10 @@ Scaffold() {
             modifier = Modifier.padding(top = 16.dp),
             enabled = isButtonEnabled,
             onClick = {
+                navController.navigate(route = NavRoute.Main.route)
                 viewModel.addNote(note = Note(title = title, subtitle = subtitle)){
-                    navController.navigate(route = NavRoute.Main.route)
+                    Log.d("check", "Title: $title, Subtitle: $subtitle")
                 }
-
         }) {
             Text(text = ADD_NOTE)
         }

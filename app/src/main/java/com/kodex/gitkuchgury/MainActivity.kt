@@ -16,13 +16,20 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.kodex.gitkuchgury.navigation.NotesNavHost
 import com.kodex.gitkuchgury.ui.components.icon
 import com.kodex.gitkuchgury.ui.theme.GitKuchguryTheme
 
 class MainActivity : ComponentActivity() {
+    private lateinit var mAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             GitKuchguryTheme {
                 val context = LocalContext.current

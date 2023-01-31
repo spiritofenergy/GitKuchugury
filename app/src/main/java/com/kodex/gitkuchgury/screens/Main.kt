@@ -37,7 +37,7 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate(NavRoute.Add.route)
+                     navController.navigate(NavRoute.Add.route)
                 }) {
                 Icon(imageVector = Icons.Filled.Add,
                     contentDescription = "Add Icons",
@@ -45,7 +45,7 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
             }
         }
     ){
-        LazyColumn() {
+        LazyColumn {
             items(notes){ note ->
                 NoteItem(note = note, navController = navController)
             }
@@ -55,9 +55,12 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
     }
 
 @Composable
-fun NoteItem(note: Note,
-                 navController: NavController
-    ) {
+fun NoteItem(note: Note, navController: NavController) {
+  /*  val noteId = when(DB_TYPE){
+        TYPE_DATABASE -> note.id
+        TYPE_FIREBASE -> note.firebaseId
+        else -> EMPTY
+    }*/
         Card(modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp, horizontal = 4.dp)
