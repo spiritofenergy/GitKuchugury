@@ -16,7 +16,7 @@ import com.kodex.gitkuchgury.utils.Constants.Screens.NOTE_SCREEN
 import com.kodex.gitkuchgury.utils.Constants.Screens.START_SCREEN
 
 sealed class  NavRoute(val route: String){
-    object Start: NavRoute(START_SCREEN)
+   object Start: NavRoute(START_SCREEN)
     object Add : NavRoute(ADD_SCREEN)
     object Main: NavRoute(MAIN_SCREEN)
     object Note: NavRoute(NOTE_SCREEN)
