@@ -33,6 +33,9 @@ import com.kodex.gitkuchgury.utils.Constants.Keys.NOTE_TITLE
 import com.kodex.gitkuchgury.utils.Constants.Keys.SUBTITLE
 import com.kodex.gitkuchgury.utils.Constants.Keys.TITLE
 import com.kodex.gitkuchgury.utils.Constants.Keys.UPDATE_NOTE
+import com.kodex.gitkuchgury.utils.DB_TYPE
+import com.kodex.gitkuchgury.utils.TYPE_FIREBASE
+import com.kodex.gitkuchgury.utils.TYPE_ROOM
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -40,9 +43,15 @@ import kotlinx.coroutines.launch
 fun NoteScreen(navController: NavController, viewModel: MainViewModel, noteId: String?) {
 
     val notes = viewModel.reedAllNotes().observeAsState().value
-    val note =
-        notes?.firstOrNull { it.id == noteId?.toInt() } ?: Note(title = NONE, subtitle = NONE)
-
+    val note = when(DB_TYPE){
+        TYPE_ROOM ->{
+            notes?.firstOrNull{ it.id == noteId?.toInt()} ?: Note()
+        }
+        TYPE_FIREBASE ->{
+            notes?.firstOrNull{ it.firebaseId  == noteId} ?: Note()
+        }
+        else -> Note()
+    }
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val coroutineScope = rememberCoroutineScope()
 
@@ -79,7 +88,7 @@ fun NoteScreen(navController: NavController, viewModel: MainViewModel, noteId: S
                         modifier = Modifier.padding(top = 16.dp),
                         onClick = {
                         viewModel.updateNote(note =
-                        Note(id = note.id, title = title, subtitle = subtitle)){
+                        Note(id = note.id, title = title, subtitle = subtitle, firebaseId = note.firebaseId)){
                             navController.navigate(NavRoute.Main.route)
                         } }) {
                         Text(text = UPDATE_NOTE)

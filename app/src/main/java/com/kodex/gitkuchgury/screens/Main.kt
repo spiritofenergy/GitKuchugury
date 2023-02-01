@@ -1,6 +1,7 @@
 package com.kodex.gitkuchgury.screens
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +30,10 @@ import com.kodex.gitkuchgury.MainViewModelFactory
 import com.kodex.gitkuchgury.model.Note
 import com.kodex.gitkuchgury.navigation.NavRoute
 import com.kodex.gitkuchgury.ui.theme.GitKuchguryTheme
+import com.kodex.gitkuchgury.utils.Constants.Keys.EMPTY
+import com.kodex.gitkuchgury.utils.DB_TYPE
+import com.kodex.gitkuchgury.utils.TYPE_DATABASE
+import com.kodex.gitkuchgury.utils.TYPE_FIREBASE
 
 @Composable
 fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
@@ -56,16 +61,20 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
 
 @Composable
 fun NoteItem(note: Note, navController: NavController) {
-  /*  val noteId = when(DB_TYPE){
+    val noteId = when(DB_TYPE){
         TYPE_DATABASE -> note.id
         TYPE_FIREBASE -> note.firebaseId
         else -> EMPTY
-    }*/
+
+    }
         Card(modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp, horizontal = 4.dp)
             .clickable {
-                navController.navigate(NavRoute.Note.route + "/${note.id}")
+                Log.d("check", "clickable: $noteId")
+                navController.navigate(NavRoute.Note.route + "/${noteId}")
+                Log.d("check", "$noteId")
+
             },
             elevation = 6.dp
         ) {

@@ -30,9 +30,8 @@ class AppFirebaseRepository() : DatabaseRepository {
         val mapNotes = hashMapOf<String, Any>()
 
         mapNotes[FIREBASE_ID] = noteId
-        mapNotes[Constants.Keys.TITLE] = note.title
-        mapNotes[Constants.Keys.SUBTITLE] = note.subtitle
-
+        mapNotes[TITLE] = note.title
+        mapNotes[SUBTITLE] = note.subtitle
 
         database.child(noteId)
             .updateChildren(mapNotes)
@@ -42,6 +41,18 @@ class AppFirebaseRepository() : DatabaseRepository {
     }
 
     override suspend fun update(note: Note, onSuccess: () -> Unit) {
+        val noteId = database.push().key.toString()
+        val mapNotes = hashMapOf<String, Any>()
+
+        mapNotes[FIREBASE_ID] = noteId
+        mapNotes[TITLE] = note.title
+        mapNotes[SUBTITLE] = note.subtitle
+
+        database.child(noteId)
+            .updateChildren(mapNotes)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener{
+            }
 
     }
 
