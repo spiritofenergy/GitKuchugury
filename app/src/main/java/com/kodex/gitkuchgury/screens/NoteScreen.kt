@@ -1,7 +1,6 @@
 package com.kodex.gitkuchgury.screens
 
 import android.app.Application
-import android.provider.ContactsContract
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -22,33 +21,30 @@ import com.kodex.gitkuchgury.MainViewModelFactory
 import com.kodex.gitkuchgury.model.Note
 import com.kodex.gitkuchgury.navigation.NavRoute
 import com.kodex.gitkuchgury.ui.theme.GitKuchguryTheme
-import com.kodex.gitkuchgury.utils.Constants
 import com.kodex.gitkuchgury.utils.Constants.Keys.DELETE
 import com.kodex.gitkuchgury.utils.Constants.Keys.EDIT_NOTE
 import com.kodex.gitkuchgury.utils.Constants.Keys.EMPTY
 import com.kodex.gitkuchgury.utils.Constants.Keys.NAV_BECK
-import com.kodex.gitkuchgury.utils.Constants.Keys.NONE
-import com.kodex.gitkuchgury.utils.Constants.Keys.NOTE_SUBTITLE
-import com.kodex.gitkuchgury.utils.Constants.Keys.NOTE_TITLE
 import com.kodex.gitkuchgury.utils.Constants.Keys.SUBTITLE
 import com.kodex.gitkuchgury.utils.Constants.Keys.TITLE
 import com.kodex.gitkuchgury.utils.Constants.Keys.UPDATE_NOTE
 import com.kodex.gitkuchgury.utils.DB_TYPE
 import com.kodex.gitkuchgury.utils.TYPE_FIREBASE
 import com.kodex.gitkuchgury.utils.TYPE_ROOM
+import com.kodex.gitkuchgury.ui.components.TopAppBar
 import kotlinx.coroutines.launch
-
+@ExperimentalMaterialApi
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NoteScreen(navController: NavController, viewModel: MainViewModel, noteId: String?) {
 
-    val notes = viewModel.reedAllNotes().observeAsState().value
-    val note = when(DB_TYPE){
+    val notes = viewModel.reedAllNotes().observeAsState(listOf()).value
+    val note = when(DB_TYPE.value){
         TYPE_ROOM ->{
-            notes?.firstOrNull{ it.id == noteId?.toInt()} ?: Note()
+            notes.firstOrNull{ it.id == noteId?.toInt()} ?: Note()
         }
         TYPE_FIREBASE ->{
-            notes?.firstOrNull{ it.firebaseId  == noteId} ?: Note()
+            notes.firstOrNull{ it.firebaseId  == noteId} ?: Note()
         }
         else -> Note()
     }
@@ -98,6 +94,7 @@ fun NoteScreen(navController: NavController, viewModel: MainViewModel, noteId: S
             }
         }) {
         Scaffold(
+            topBar = { TopAppBar(navController) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.fillMaxSize(),
@@ -151,6 +148,7 @@ fun NoteScreen(navController: NavController, viewModel: MainViewModel, noteId: S
         }
     }
 }
+@ExperimentalMaterialApi
 @Preview(showBackground = true)
 @Composable
 fun PrevNoteScreen(){

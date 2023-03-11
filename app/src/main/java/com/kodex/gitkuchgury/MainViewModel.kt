@@ -9,6 +9,7 @@ import com.kodex.gitkuchgury.database.room.AppRoomDatabase
 import com.kodex.gitkuchgury.database.room.repository.RoomRepository
 import com.kodex.gitkuchgury.model.Note
 import com.kodex.gitkuchgury.utils.*
+import com.kodex.gitkuchgury.utils.Constants.Keys.EMPTY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -68,7 +69,20 @@ class MainViewModel (application: Application):AndroidViewModel(application){
     }
 
     fun reedAllNotes() = REPOSITORY.readAll
+
+    fun signOut(onSuccess: () -> Unit){
+        when(DB_TYPE.value){
+            TYPE_FIREBASE,
+                TYPE_ROOM -> {
+                DB_TYPE.value = EMPTY
+                    REPOSITORY.signOut()
+                onSuccess()
+                }
+            else -> {Log.d("check", "signOut: ELSE: ${DB_TYPE.value}")}
+        }
+    }
 }
+
 class MainViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
 

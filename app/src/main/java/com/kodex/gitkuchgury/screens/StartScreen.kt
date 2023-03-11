@@ -1,8 +1,6 @@
 package com.kodex.gitkuchgury.screens
 
 import android.app.Application
-import android.location.Location
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,8 +20,8 @@ import com.kodex.gitkuchgury.MainViewModel
 import com.kodex.gitkuchgury.MainViewModelFactory
 import com.kodex.gitkuchgury.navigation.NavRoute
 import com.kodex.gitkuchgury.ui.theme.GitKuchguryTheme
+import com.kodex.gitkuchgury.ui.components.TopAppBar
 import com.kodex.gitkuchgury.utils.*
-import com.kodex.gitkuchgury.utils.Constants.Keys.FIREBASE_DATABASE
 import com.kodex.gitkuchgury.utils.Constants.Keys.LOGIN_TEXT
 import com.kodex.gitkuchgury.utils.Constants.Keys.LOG_IN
 import com.kodex.gitkuchgury.utils.Constants.Keys.PASSWORD_TEX
@@ -75,7 +73,7 @@ fun StartScreen(navController: NavController, viewModel: MainViewModel) {
                             LOGIN = login
                             PASSWORD = password
                             viewModel.initDataBase(TYPE_FIREBASE) {
-                                DB_TYPE = TYPE_FIREBASE
+                                DB_TYPE.value = TYPE_FIREBASE
                                 Toast.makeText(context, "Вы успешно авторизовались с $login & $password",
                                     Toast.LENGTH_LONG).show()
                                 navController.navigate(NavRoute.Main.route)
@@ -89,6 +87,7 @@ fun StartScreen(navController: NavController, viewModel: MainViewModel) {
             }
         }) {
         Scaffold(
+            topBar = { TopAppBar(navController) },
             modifier = Modifier.fillMaxSize()
         ) {
             Column(
@@ -100,7 +99,7 @@ fun StartScreen(navController: NavController, viewModel: MainViewModel) {
                 Button(
                     onClick = {
                         viewModel.initDataBase(TYPE_ROOM) {
-                            DB_TYPE = TYPE_ROOM
+                            DB_TYPE.value = TYPE_ROOM
                             navController.navigate(route = NavRoute.Main.route)
                         }
                     },

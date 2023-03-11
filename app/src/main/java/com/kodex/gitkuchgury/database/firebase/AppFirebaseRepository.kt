@@ -1,5 +1,6 @@
 package com.kodex.gitkuchgury.database.firebase
 
+import android.annotation.SuppressLint
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
@@ -25,6 +26,7 @@ class AppFirebaseRepository() : DatabaseRepository {
 
     override val readAll: LiveData<List<Note>> = AllNotesLiveData()
 
+        //Создаем заметку
     override suspend fun create(note: Note, onSuccess: () -> Unit) {
         val noteId = database.push().key.toString()
         val mapNotes = hashMapOf<String, Any>()
@@ -37,18 +39,20 @@ class AppFirebaseRepository() : DatabaseRepository {
             .updateChildren(mapNotes)
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener{
+
             }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override suspend fun update(note: Note, onSuccess: () -> Unit) {
-        val noteId = database.push().key.toString()
+        val noteId = note.firebaseId
         val mapNotes = hashMapOf<String, Any>()
 
         mapNotes[FIREBASE_ID] = noteId
         mapNotes[TITLE] = note.title
         mapNotes[SUBTITLE] = note.subtitle
 
-        database.child(noteId)
+             database.child(noteId)
             .updateChildren(mapNotes)
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener{
@@ -57,7 +61,9 @@ class AppFirebaseRepository() : DatabaseRepository {
     }
 
     override suspend fun delete(note: Note, onSuccess: () -> Unit) {
-        TODO("Not yet implemented")
+       database.child(note.firebaseId).removeValue()
+           .addOnSuccessListener { onSuccess() }
+           .addOnFailureListener{}
     }
 
     override fun signOut() {
