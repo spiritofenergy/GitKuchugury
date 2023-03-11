@@ -4,8 +4,12 @@ import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.magnifier
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,13 +20,14 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.kodex.gitkuchgury.navigation.NavRoute
 import com.kodex.gitkuchgury.navigation.NotesNavHost
 import com.kodex.gitkuchgury.ui.components.icon
 import com.kodex.gitkuchgury.ui.theme.GitKuchguryTheme
+import com.kodex.gitkuchgury.ui.components.TopAppBar
+import com.kodex.gitkuchgury.utils.DB_TYPE
 
 class MainActivity : ComponentActivity() {
     private lateinit var mAuth: FirebaseAuth
@@ -34,13 +39,13 @@ class MainActivity : ComponentActivity() {
             GitKuchguryTheme {
                 val context = LocalContext.current
                 val mViewModel: MainViewModel = viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
-
+                val navController = rememberNavController()
                 Scaffold (
-                   topBar = { TopAppBar() },
+                 //  topBar = { TopAppBar() },
                    content = {
                        Surface(modifier = Modifier.fillMaxSize(),
                            color = MaterialTheme.colors.background) {
-                            NotesNavHost(mViewModel)
+                            NotesNavHost(mViewModel, navController)
                        }
                    }
                )
@@ -49,30 +54,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-@Composable
-private fun TopAppBar() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp)
-            .padding(horizontal = 10.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier.padding(6.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                ImageVector.vectorResource(id = R.drawable.title_topbar),
-                contentDescription = ""
-            )
-        }
-        Icon(
-            ImageBitmap.imageResource(id = R.drawable.ic_dm),
-            modifier = Modifier.icon(),
-            contentDescription = ""
-        )
-    }
-}
-

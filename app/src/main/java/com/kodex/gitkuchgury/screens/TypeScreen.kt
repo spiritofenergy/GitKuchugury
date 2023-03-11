@@ -32,8 +32,8 @@ import com.kodex.gitkuchgury.navigation.NavRoute
 import com.kodex.gitkuchgury.ui.theme.GitKuchguryTheme
 import com.kodex.gitkuchgury.utils.Constants.Keys.EMPTY
 import com.kodex.gitkuchgury.utils.DB_TYPE
-import com.kodex.gitkuchgury.utils.TYPE_DATABASE
 import com.kodex.gitkuchgury.utils.TYPE_FIREBASE
+import com.kodex.gitkuchgury.utils.TYPE_ROOM
 
 @Composable
 fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
@@ -60,21 +60,19 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
     }
 
 @Composable
-fun NoteItem(note: Note, navController: NavController) {
-    val noteId = when(DB_TYPE){
-        TYPE_DATABASE -> note.id
+fun NoteItem(note: Note, navController: NavController
+) {
+    val noteId = when(DB_TYPE.value){
         TYPE_FIREBASE -> note.firebaseId
+        TYPE_ROOM -> note.id
         else -> EMPTY
-
     }
         Card(modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp, horizontal = 4.dp)
             .clickable {
-                Log.d("check", "clickable: $noteId")
-                navController.navigate(NavRoute.Note.route + "/${noteId}")
-                Log.d("check", "$noteId")
-
+                Log.d("check", "noteId: $noteId")
+                navController.navigate(NavRoute.Note.route + "/${note.id}")
             },
             elevation = 6.dp
         ) {

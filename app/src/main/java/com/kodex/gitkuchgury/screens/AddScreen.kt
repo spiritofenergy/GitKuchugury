@@ -25,12 +25,11 @@ import com.kodex.gitkuchgury.MainViewModel
 import com.kodex.gitkuchgury.MainViewModelFactory
 import com.kodex.gitkuchgury.model.Note
 import com.kodex.gitkuchgury.navigation.NavRoute
+import com.kodex.gitkuchgury.ui.components.TopAppBar
 import com.kodex.gitkuchgury.ui.theme.GitKuchguryTheme
 import com.kodex.gitkuchgury.utils.Constants.Keys.ADD_NOTE
 import com.kodex.gitkuchgury.utils.Constants.Keys.NOTE_SUBTITLE
 import com.kodex.gitkuchgury.utils.Constants.Keys.NOTE_TITLE
-import com.kodex.gitkuchgury.utils.Constants.Keys.SUBTITLE
-import com.kodex.gitkuchgury.utils.Constants.Keys.TITLE
 
 @Composable
 fun AddScreen(navController: NavController, viewModel: MainViewModel) {
@@ -39,7 +38,9 @@ fun AddScreen(navController: NavController, viewModel: MainViewModel) {
     var subtitle by remember { mutableStateOf("") }
     var isButtonEnabled by remember { mutableStateOf(false) }
 
-Scaffold() {
+Scaffold(
+    topBar = { TopAppBar(navController) },
+) {
     Column(modifier = Modifier.fillMaxSize(),
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center) {

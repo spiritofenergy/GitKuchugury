@@ -18,6 +18,7 @@ class AllNotesLiveData : LiveData<List<Note>>() {
 
     private val listener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
+            // Создаем список наших заметок
             val notes = mutableListOf<Note>()
             snapshot.children.map {
                 notes.add(it.getValue(Note::class.java) ?: Note())
