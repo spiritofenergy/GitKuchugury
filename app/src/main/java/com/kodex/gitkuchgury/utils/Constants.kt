@@ -1,5 +1,6 @@
 package com.kodex.gitkuchgury.utils
 
+import androidx.compose.runtime.mutableStateOf
 import com.kodex.gitkuchgury.database.DatabaseRepository
 
     const val TYPE_DATABASE = "type_database"
@@ -10,7 +11,7 @@ import com.kodex.gitkuchgury.database.DatabaseRepository
     lateinit var REPOSITORY: DatabaseRepository
     lateinit var LOGIN: String
     lateinit var PASSWORD: String
-    lateinit var DB_TYPE: String
+     var DB_TYPE = mutableStateOf("")
 
     object Constants{
         object Keys{
@@ -43,6 +44,8 @@ import com.kodex.gitkuchgury.database.DatabaseRepository
             const val PASSWORD_TEX ="Пароль"
         }
         object Screens{
+            const val SPLASH_SCREEN = "splash_screen"
+            const val HOME_SCREEN = "home_screen"
             const val START_SCREEN = "start_screen"
             const val MAIN_SCREEN = "main_screen"
             const val ADD_SCREEN = "add_screen"
