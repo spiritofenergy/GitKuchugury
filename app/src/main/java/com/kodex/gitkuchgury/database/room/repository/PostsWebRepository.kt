@@ -9,7 +9,7 @@ import com.kodex.gitkuchgury.model.names
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-object PostsRepository {
+object PostsWebRepository {
 
     private val _posts = mutableStateOf<List<Post>>(emptyList())
     val posts: State<List<Post>> = _posts
@@ -69,7 +69,7 @@ object PostsRepository {
                     break
                 }
             }
-            this@PostsRepository._posts.value = posts
+            this@PostsWebRepository._posts.value = posts
         }
     }
 

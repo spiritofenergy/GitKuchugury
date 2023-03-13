@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.kodex.gitkuchgury.database.firebase.AppFirebaseRepository
-import com.kodex.gitkuchgury.database.room.AppRoomDatabase
-import com.kodex.gitkuchgury.database.room.repository.RoomRepository
+import com.kodex.gitkuchgury.database.room.AppRoomNoteDatabase
+import com.kodex.gitkuchgury.database.room.repository.NoteRoomRepository
 import com.kodex.gitkuchgury.model.Note
 import com.kodex.gitkuchgury.utils.*
 import com.kodex.gitkuchgury.utils.Constants.Keys.EMPTY
@@ -24,15 +24,15 @@ class MainViewModel (application: Application):AndroidViewModel(application){
 
             TYPE_ROOM -> {
 
-                val dao = AppRoomDatabase.getInstance(context = context).getRoomDao()
+                val dao = AppRoomNoteDatabase.getInstance(context = context).getRoomDao()
                 Log.d("check", "ManViewModel initDataBase with: $dao")
-                REPOSITORY = RoomRepository(dao)
-                Log.d("check", "ManViewModel initDataBase with: $REPOSITORY")
+                REPOSITORY_NOTE = NoteRoomRepository(dao)
+                Log.d("check", "ManViewModel initDataBase with: $REPOSITORY_NOTE")
                 onSuccess()
             }
             TYPE_FIREBASE -> {
-                REPOSITORY = AppFirebaseRepository()
-                REPOSITORY.connectToFirebase(
+                REPOSITORY_NOTE = AppFirebaseRepository()
+                REPOSITORY_NOTE.connectToFirebase(
                     {onSuccess() },
                     {Log.d("check", "Error: $it")}
                 )
@@ -41,7 +41,7 @@ class MainViewModel (application: Application):AndroidViewModel(application){
     }
     fun addNote(note: Note, onSuccess: () -> Unit){
         viewModelScope.launch(Dispatchers.IO){
-            REPOSITORY.create(note = note){
+            REPOSITORY_NOTE.create(note = note){
                 viewModelScope.launch ( Dispatchers.Main ){
                     onSuccess()
                 }
@@ -50,7 +50,7 @@ class MainViewModel (application: Application):AndroidViewModel(application){
     }
     fun updateNote(note: Note, onSuccess: () -> Unit){
         viewModelScope.launch(Dispatchers.IO){
-            REPOSITORY.update(note = note){
+            REPOSITORY_NOTE.update(note = note){
                 viewModelScope.launch(Dispatchers.Main){
                     onSuccess()
                 }
@@ -60,7 +60,7 @@ class MainViewModel (application: Application):AndroidViewModel(application){
 
     fun deleteNote(note: Note, onSuccess: () -> Unit){
         viewModelScope.launch (Dispatchers.IO){
-            REPOSITORY.delete(note = note){
+            REPOSITORY_NOTE.delete(note = note){
                 viewModelScope.launch(Dispatchers.Main){
                     onSuccess()
                 }
@@ -68,17 +68,17 @@ class MainViewModel (application: Application):AndroidViewModel(application){
         }
     }
 
-    fun reedAllNotes() = REPOSITORY.readAll
+    fun reedAllNotes() = REPOSITORY_NOTE.readAllNotes
 
     fun signOut(onSuccess: () -> Unit){
-        when(DB_TYPE.value){
+        when(DB_NOTE_TYPE.value){
             TYPE_FIREBASE,
                 TYPE_ROOM -> {
-                DB_TYPE.value = EMPTY
-                    REPOSITORY.signOut()
+                DB_NOTE_TYPE.value = EMPTY
+                    REPOSITORY_NOTE.signOut()
                 onSuccess()
                 }
-            else -> {Log.d("check", "signOut: ELSE: ${DB_TYPE.value}")}
+            else -> {Log.d("check", "signOut: ELSE: ${DB_NOTE_TYPE.value}")}
         }
     }
 }

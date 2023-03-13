@@ -1,6 +1,8 @@
 package com.kodex.gitkuchgury.ui.components
 
 import android.graphics.drawable.Icon
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.clickable
@@ -19,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,6 +42,7 @@ fun AnimLikeButton(
     post: Post,
     onLikeClick: (Post) -> Unit
 ) {
+    val context = LocalContext.current
 
     var transitionState by remember {
         mutableStateOf(MutableTransitionState(LikeAnimationState.Initial))
@@ -50,6 +54,10 @@ fun AnimLikeButton(
                 onClick = {
                     transitionState = MutableTransitionState(LikeAnimationState.Start)
                     onLikeClick.invoke(post)
+                    Log.d("check", "Pressed Button Favorite")
+                    Toast.makeText(context, "Button Favorite", Toast.LENGTH_SHORT).show()
+
+
                 }
             )
             .indication(

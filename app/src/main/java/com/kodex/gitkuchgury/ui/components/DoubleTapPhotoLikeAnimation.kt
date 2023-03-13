@@ -1,7 +1,10 @@
 package com.kodex.gitkuchgury.ui.components
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.core.*
 import androidx.compose.animation.core.R
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +16,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
+import com.kodex.gitkuchgury.R.drawable
+
 
 @Composable
 fun DoubleTapPhotoLikeAnimation(onDoubleTap: () -> Unit) {
+    val context = LocalContext.current
     // Creates a transition state that starts in [Disappeared] State
     var transitionState by remember {
         mutableStateOf(MutableTransitionState(LikedStates.Disappeared))

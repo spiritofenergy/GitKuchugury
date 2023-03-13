@@ -73,10 +73,10 @@ fun StartScreen(navController: NavController, viewModel: MainViewModel) {
                             LOGIN = login
                             PASSWORD = password
                             viewModel.initDataBase(TYPE_FIREBASE) {
-                                DB_TYPE.value = TYPE_FIREBASE
+                                DB_NOTE_TYPE.value = TYPE_FIREBASE
                                 Toast.makeText(context, "Вы успешно авторизовались с $login & $password",
                                     Toast.LENGTH_LONG).show()
-                                navController.navigate(NavRoute.Main.route)
+                                navController.navigate(NavRoute.Type.route)
                             }
                         },
                         enabled = login.isNotEmpty() && password.isNotEmpty()
@@ -99,8 +99,8 @@ fun StartScreen(navController: NavController, viewModel: MainViewModel) {
                 Button(
                     onClick = {
                         viewModel.initDataBase(TYPE_ROOM) {
-                            DB_TYPE.value = TYPE_ROOM
-                            navController.navigate(route = NavRoute.Main.route)
+                            DB_NOTE_TYPE.value = TYPE_ROOM
+                            navController.navigate(NavRoute.Type.route)
                         }
                     },
                     modifier = Modifier

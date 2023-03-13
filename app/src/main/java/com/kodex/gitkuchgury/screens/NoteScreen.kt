@@ -28,7 +28,7 @@ import com.kodex.gitkuchgury.utils.Constants.Keys.NAV_BECK
 import com.kodex.gitkuchgury.utils.Constants.Keys.SUBTITLE
 import com.kodex.gitkuchgury.utils.Constants.Keys.TITLE
 import com.kodex.gitkuchgury.utils.Constants.Keys.UPDATE_NOTE
-import com.kodex.gitkuchgury.utils.DB_TYPE
+import com.kodex.gitkuchgury.utils.DB_NOTE_TYPE
 import com.kodex.gitkuchgury.utils.TYPE_FIREBASE
 import com.kodex.gitkuchgury.utils.TYPE_ROOM
 import com.kodex.gitkuchgury.ui.components.TopAppBar
@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
 fun NoteScreen(navController: NavController, viewModel: MainViewModel, noteId: String?) {
 
     val notes = viewModel.reedAllNotes().observeAsState(listOf()).value
-    val note = when(DB_TYPE.value){
+    val note = when(DB_NOTE_TYPE.value){
         TYPE_ROOM ->{
             notes.firstOrNull{ it.id == noteId?.toInt()} ?: Note()
         }
@@ -85,7 +85,7 @@ fun NoteScreen(navController: NavController, viewModel: MainViewModel, noteId: S
                         onClick = {
                         viewModel.updateNote(note =
                         Note(id = note.id, title = title, subtitle = subtitle, firebaseId = note.firebaseId)){
-                            navController.navigate(NavRoute.Main.route)
+                            navController.navigate(NavRoute.Type.route)
                         } }) {
                         Text(text = UPDATE_NOTE)
                     }
@@ -132,13 +132,13 @@ fun NoteScreen(navController: NavController, viewModel: MainViewModel, noteId: S
                         }
                         Button(onClick = {
                            viewModel.deleteNote(note = note){
-                               navController.navigate(NavRoute.Main.route)
+                               navController.navigate(NavRoute.Type.route)
                            }
                         }) {
                             Text(text = DELETE)
                         }
                         Button(onClick = {
-                            navController.navigate(NavRoute.Main.route)
+                            navController.navigate(NavRoute.Type.route)
                         }) {
                             Text(text = NAV_BECK)
                         }

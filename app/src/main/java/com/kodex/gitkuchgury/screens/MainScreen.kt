@@ -23,6 +23,7 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.kodex.gitkuchgury.MainViewModel
@@ -54,9 +55,9 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
         { section ->
             when (section) {
                 HomeSection.Home -> HomeScreen(navController = navController, viewModel = viewModel())
-                HomeSection.Reels -> HomeScreen(navController = navController, viewModel = viewModel())
+                HomeSection.Reels -> StartScreen(navController = navController, viewModel = viewModel())
                 HomeSection.Add -> Content(title = "Add Post options")
-                HomeSection.Favorite -> Content(title = "Favorite")
+                HomeSection.Favorite -> FavoriteScreen(navController = navController, viewModel =viewModel())
                 HomeSection.Profile -> Content(title = "Profile")
 
             }

@@ -31,14 +31,16 @@ import com.kodex.gitkuchgury.model.Note
 import com.kodex.gitkuchgury.navigation.NavRoute
 import com.kodex.gitkuchgury.ui.theme.GitKuchguryTheme
 import com.kodex.gitkuchgury.utils.Constants.Keys.EMPTY
-import com.kodex.gitkuchgury.utils.DB_TYPE
+import com.kodex.gitkuchgury.utils.DB_NOTE_TYPE
 import com.kodex.gitkuchgury.utils.TYPE_FIREBASE
 import com.kodex.gitkuchgury.utils.TYPE_ROOM
+import com.kodex.gitkuchgury.ui.components.TopAppBar
 
 @Composable
 fun TypeScreen(navController: NavHostController, viewModel: MainViewModel) {
     val notes = viewModel.reedAllNotes().observeAsState(listOf()).value
     Scaffold(
+        topBar = {TopAppBar(navController) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -55,14 +57,13 @@ fun TypeScreen(navController: NavHostController, viewModel: MainViewModel) {
                 NoteItem(note = note, navController = navController)
             }
         }
-
         }
     }
 
 @Composable
 fun NoteItem(note: Note, navController: NavController
 ) {
-    val noteId = when(DB_TYPE.value){
+    val noteId = when(DB_NOTE_TYPE.value){
         TYPE_FIREBASE -> note.firebaseId
         TYPE_ROOM -> note.id
         else -> EMPTY

@@ -8,24 +8,24 @@ import com.kodex.gitkuchgury.database.room.dao.NoteRoomDao
 import com.kodex.gitkuchgury.model.Note
 
 @Database(entities = [Note::class], version = 1)
-abstract class AppRoomDatabase: RoomDatabase() {
+abstract class AppRoomNoteDatabase: RoomDatabase() {
 
     abstract fun getRoomDao(): NoteRoomDao
 
     companion object{
 
         @Volatile
-        private var INSTANCE: AppRoomDatabase? = null
+        private var INSTANCE_NOTE: AppRoomNoteDatabase? = null
 
-        fun getInstance(context: Context): AppRoomDatabase{
-            return if (INSTANCE == null){
-                INSTANCE = Room.databaseBuilder(
+        fun getInstance(context: Context): AppRoomNoteDatabase{
+            return if (INSTANCE_NOTE == null){
+                INSTANCE_NOTE = Room.databaseBuilder(
                     context,
-                    AppRoomDatabase::class.java,
+                    AppRoomNoteDatabase::class.java,
                     "notes_database"
                 ).build()
-                INSTANCE as AppRoomDatabase
-            }else INSTANCE as AppRoomDatabase
+                INSTANCE_NOTE as AppRoomNoteDatabase
+            }else INSTANCE_NOTE as AppRoomNoteDatabase
         }
     }
 }

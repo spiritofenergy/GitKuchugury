@@ -69,7 +69,7 @@ Scaffold(
             modifier = Modifier.padding(top = 16.dp),
             enabled = isButtonEnabled,
             onClick = {
-                navController.navigate(route = NavRoute.Main.route)
+                navController.navigate(route = NavRoute.Type.route)
                 viewModel.addNote(note = Note(title = title, subtitle = subtitle)){
                     Log.d("check", "Title: $title, Subtitle: $subtitle")
                 }

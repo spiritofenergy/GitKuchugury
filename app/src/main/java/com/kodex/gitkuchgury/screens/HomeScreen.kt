@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
-import androidx.compose.material.R
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -20,12 +19,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.kodex.gitkuchgury.MainViewModel
-import com.kodex.gitkuchgury.R.drawable
-import com.kodex.gitkuchgury.database.room.repository.PostsRepository
+import com.kodex.gitkuchgury.database.room.repository.PostsWebRepository
 import com.kodex.gitkuchgury.database.room.repository.StoriesRepository
 import com.kodex.gitkuchgury.model.Post
 import com.kodex.gitkuchgury.model.Story
-import com.kodex.gitkuchgury.navigation.NavRoute
 import com.kodex.gitkuchgury.ui.components.PostView
 import com.kodex.gitkuchgury.ui.components.StoryImage
 import com.kodex.gitkuchgury.ui.components.TopAppBar
@@ -40,7 +37,7 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel) {
     Scaffold(
 
         topBar = { TopAppBar(navController) }) {
-        val posts by PostsRepository.posts
+        val posts by PostsWebRepository.posts
         val stories by StoriesRepository.observeStories()
 
         LazyColumn {
@@ -52,12 +49,12 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel) {
                 Post(post,
                     onDoubleClick = {
                         coroutineScope.launch {
-                            PostsRepository.performLike(post.id)
+                            PostsWebRepository.performLike(post.id)
                         }
                     },
                     onLikeToggle = {
                         coroutineScope.launch {
-                            PostsRepository.toggleLike(post.id)
+                            PostsWebRepository.toggleLike(post.id)
                         }
                     }
                 )

@@ -1,6 +1,5 @@
 package com.kodex.gitkuchgury.ui.components
 
-import android.app.Application
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -16,19 +15,14 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.kodex.gitkuchgury.R
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.kodex.gitkuchgury.MainViewModel
-import com.kodex.gitkuchgury.MainViewModelFactory
 import com.kodex.gitkuchgury.navigation.NavRoute
-import com.kodex.gitkuchgury.utils.DB_TYPE
 
 @Composable
 fun TopAppBar (navController: NavController){
     val context = LocalContext.current
-    val mViewModel: MainViewModel = viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
-    val navController = rememberNavController()
+   // val mViewModel: MainViewModel = viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+   //val navController = rememberNavController()
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,7 +49,7 @@ fun TopAppBar (navController: NavController){
             Icon(imageVector = Icons.Default.ExitToApp,
                 contentDescription = "",
                 modifier = Modifier.clickable {
-                    navController.navigate(route = NavRoute.Main.route)
+                    navController.navigate(NavRoute.Main.route)
                 }
             )
 

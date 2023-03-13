@@ -1,12 +1,12 @@
 package com.kodex.gitkuchgury.database.room.repository
 
 import androidx.lifecycle.LiveData
-import com.kodex.gitkuchgury.database.DatabaseRepository
+import com.kodex.gitkuchgury.database.DatabaseNoteRepository
 import com.kodex.gitkuchgury.database.room.dao.NoteRoomDao
 import com.kodex.gitkuchgury.model.Note
 
-class RoomRepository (private val noteRoomDao: NoteRoomDao): DatabaseRepository{
-    override val readAll: LiveData<List<Note>>
+class NoteRoomRepository (private val noteRoomDao: NoteRoomDao): DatabaseNoteRepository{
+    override val readAllNotes: LiveData<List<Note>>
         get() =  noteRoomDao.getAllNotes()
 
     override suspend fun create(note: Note, onSuccess: () -> Unit) {

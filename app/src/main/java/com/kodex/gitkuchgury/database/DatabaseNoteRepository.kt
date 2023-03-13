@@ -3,9 +3,10 @@ package com.kodex.gitkuchgury.database
 import androidx.lifecycle.LiveData
 import com.kodex.gitkuchgury.model.Note
 
-interface DatabaseRepository {
+interface DatabaseNoteRepository {
 
-    val readAll: LiveData<List<Note>>
+    val readAllNotes: LiveData<List<Note>>
+   // val readAllPost: LiveData<List<Post>>
 
     suspend fun create(note: Note, onSuccess: ()->Unit)
 
